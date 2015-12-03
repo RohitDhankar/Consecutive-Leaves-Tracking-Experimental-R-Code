@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Consecutive-leaves-tracking-experimental-r-code- by RohitDhankar</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Consecutive-leaves-tracking-experimental-r-code-</h1>
+        <p>Consecutive-Leaves-Tracking  [ Experimental R-Code ]</p>
+
+        <p class="view"><a href="https://github.com/RohitDhankar/Consecutive-Leaves-Tracking-Experimental-R-Code-">View the Project on GitHub <small>RohitDhankar/Consecutive-Leaves-Tracking-Experimental-R-Code-</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/RohitDhankar/Consecutive-Leaves-Tracking-Experimental-R-Code-/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/RohitDhankar/Consecutive-Leaves-Tracking-Experimental-R-Code-/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/RohitDhankar/Consecutive-Leaves-Tracking-Experimental-R-Code-">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <hr>
+
+<p>framework: bootstrap
+output: html_document
+highlighter: prettify
+hitheme: twitter-bootstrap
+mode: selfcontained
+github:
+branch: gh-pages</p>
+
+<h2>
+<a id="user-rohitdhankar" class="anchor" href="#user-rohitdhankar" aria-hidden="true"><span class="octicon octicon-link"></span></a>user: RohitDhankar</h2>
+
+<h1>
+<a id="-rohit--github" class="anchor" href="#-rohit--github" aria-hidden="true"><span class="octicon octicon-link"></span></a> Rohit <a href="https://github.com/RohitDhankar"> GitHub</a>
+</h1>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-c"># HR Department -Consecutive Leaves Problem </span>
+<span class="pl-c"># An obs - "1" is a Present day and "0" is a Leave day </span>
+<span class="pl-c"># 500 Employees 1 Qtr Leave Data </span>
+<span class="pl-smi">d</span> <span class="pl-k">&lt;-</span> read.csv(<span class="pl-s"><span class="pl-pds">"</span>C:/Users/Rohit/Desktop/HR-Cons.Leaves/d.csv<span class="pl-pds">"</span></span>)
+<span class="pl-c"># Extracting Emp ID's </span>
+<span class="pl-smi">eID</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-smi">d</span>[,<span class="pl-c1">1</span>]) ;colnames(<span class="pl-smi">eID</span>)[<span class="pl-c1">1</span>] <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>Emp-ID<span class="pl-pds">"</span></span>
+<span class="pl-c"># Deleting 1st column / variable - Emp ID</span>
+<span class="pl-smi">d</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-smi">d</span>[<span class="pl-c1">2</span><span class="pl-k">:</span><span class="pl-c1">91</span>])
+<span class="pl-c"># Summing all rows using "apply" # create an "integer column vector" </span>
+<span class="pl-c"># cbind with DF "d" # Rename new variable / Column as - "Sum-P"</span>
+<span class="pl-smi">d</span><span class="pl-k">&lt;-</span>cbind(<span class="pl-smi">d</span>,as.data.frame(apply(<span class="pl-smi">d</span>, <span class="pl-c1">1</span>, <span class="pl-smi">sum</span>)))
+colnames(<span class="pl-smi">d</span>)[<span class="pl-c1">91</span>] <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>Sum-P<span class="pl-pds">"</span></span>
+<span class="pl-c"># Counting all "0" in a Row # create an "integer column vector" </span>
+<span class="pl-c"># cbind with DF "d" # Rename new variable / Column as - "Sum-L"</span>
+<span class="pl-smi">d</span><span class="pl-k">&lt;-</span>cbind(<span class="pl-smi">d</span>,as.data.frame(apply(<span class="pl-smi">d</span><span class="pl-k">==</span><span class="pl-c1">0</span>, <span class="pl-c1">1</span>, <span class="pl-smi">sum</span>)))
+colnames(<span class="pl-smi">d</span>)[<span class="pl-c1">92</span>] <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>Sum-L<span class="pl-pds">"</span></span>
+<span class="pl-c"># calculate the startZeros  </span>
+<span class="pl-smi">startZs</span><span class="pl-k">&lt;-</span>apply(<span class="pl-smi">d</span>,<span class="pl-c1">1</span>,<span class="pl-k">function</span>(<span class="pl-smi">x</span>)which.min(<span class="pl-smi">x</span><span class="pl-k">==</span><span class="pl-c1">0</span>)<span class="pl-k">-</span><span class="pl-c1">1</span>) 
+<span class="pl-c"># gives out only "0" values as None of our ROWS starts with a ZERO value </span>
+<span class="pl-smi">stopZs</span><span class="pl-k">&lt;-</span>apply(<span class="pl-smi">d</span>,<span class="pl-c1">1</span>,<span class="pl-k">function</span>(<span class="pl-smi">x</span>)which.min(rev(<span class="pl-smi">x</span><span class="pl-k">==</span><span class="pl-c1">0</span>))<span class="pl-k">-</span><span class="pl-c1">1</span>)
+<span class="pl-c"># gives out only "0" values as None of our ROWS ends with a ZERO value </span>
+<span class="pl-c"># calculate -longest run of zeros</span>
+<span class="pl-smi">longestRun</span><span class="pl-k">&lt;-</span>apply(<span class="pl-smi">d</span>,<span class="pl-c1">1</span>,<span class="pl-k">function</span>(<span class="pl-smi">x</span>)
+  {
+  <span class="pl-v">y</span> <span class="pl-k">=</span> rle(<span class="pl-smi">x</span>);
+  max(<span class="pl-smi">y</span><span class="pl-k">$</span><span class="pl-smi">lengths</span>[<span class="pl-smi">y</span><span class="pl-k">$</span><span class="pl-smi">values</span><span class="pl-k">==</span><span class="pl-c1">0</span>],<span class="pl-c1">0</span>)}) 
+<span class="pl-c"># extracting MAX value for Longest Run of Value = "0" </span>
+<span class="pl-c"># take the max of the two values</span>
+<span class="pl-smi">Max_Zeros</span><span class="pl-k">&lt;-</span>as.data.frame(pmax(<span class="pl-smi">longestRun</span>,<span class="pl-smi">startZs</span><span class="pl-k">+</span><span class="pl-smi">stopZs</span>))
+<span class="pl-smi">ConsWks</span><span class="pl-k">&lt;-</span>ifelse(<span class="pl-smi">Max_Zeros</span><span class="pl-k">&gt;</span><span class="pl-c1">14</span>,<span class="pl-s"><span class="pl-pds">"</span>Yes<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>No<span class="pl-pds">"</span></span>) <span class="pl-c"># Converting to Yes / No factor variable for "Two Consecutive Weeks of Leave"</span>
+<span class="pl-smi">d</span><span class="pl-k">&lt;-</span>cbind(<span class="pl-smi">d</span>,as.data.frame(<span class="pl-smi">Max_Zeros</span>))
+<span class="pl-smi">d</span><span class="pl-k">&lt;-</span>cbind(<span class="pl-smi">d</span>,as.data.frame(<span class="pl-smi">ConsWks</span>))
+colnames(<span class="pl-smi">d</span>)[<span class="pl-c1">93</span>] <span class="pl-k">&lt;-</span><span class="pl-s"><span class="pl-pds">"</span>Max.Zeros<span class="pl-pds">"</span></span> ; colnames(<span class="pl-smi">d</span>)[<span class="pl-c1">94</span>] <span class="pl-k">&lt;-</span><span class="pl-s"><span class="pl-pds">"</span>Cons.Wks<span class="pl-pds">"</span></span>
+<span class="pl-smi">d</span><span class="pl-k">&lt;-</span>cbind(<span class="pl-smi">eID</span>,<span class="pl-smi">d</span>)
+
+<span class="pl-c"># Additional Code ---</span>
+<span class="pl-c"># ?rle # Help for rle </span>
+<span class="pl-c"># m &lt;- rev(rep(6:10, 1:5))</span>
+<span class="pl-c"># rle(m)</span>
+<span class="pl-c"># "Run Length Encoding" - lengths are the - Consecutive number or repetioion fo the value </span>
+<span class="pl-c"># the Values are - the numeric "values"  which are gettting repeated - are the - Consecutive numbers . </span>
+<span class="pl-c"># lengths: int [1:5] 5 4 3 2 1</span>
+<span class="pl-c"># values : int [1:5] 10 9 8 7 6</span>
+<span class="pl-c"># ?pmax</span>
+
+</pre></div>
+
+<div class="highlight highlight-source-r"><pre></pre></div>
+
+<p><br></p>
+
+<h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact...</h2>
+
+<ul>
+<li><a href="https://github.com/RohitDhankar"> email</a></li>
+<li><a href="https://github.com/RohitDhankar"> Github </a></li>
+<li><a href="https://www.linkedin.com/in/rohitdhankar"> LinkedIn </a></li>
+<li><a href="https://twitter.com/DhankarRohit"> Twitter  </a></li>
+</ul>
+
+<p><br></p>
+
+<h2>
+<a id="license---gpl---no-copyright-httpwwwgnuorglicenseslicensesenhtmlgpl" class="anchor" href="#license---gpl---no-copyright-httpwwwgnuorglicenseslicensesenhtmlgpl" aria-hidden="true"><span class="octicon octicon-link"></span></a>License - GPL - No Copyright (<a href="http://www.gnu.org/licenses/licenses.en.html#GPL">http://www.gnu.org/licenses/licenses.en.html#GPL</a>)</h2>
+
+<pre><code>
+</code></pre>
+
+<p><a href="https://github.com/RohitDhankar"> Rohit Dhankar 2015</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/RohitDhankar">RohitDhankar</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
